@@ -1,4 +1,4 @@
-# create a decision tree tha classifies people into male or female based on body weight
+# create a decision tree that classifies people into male or female based on body weight
 
 from sklearn import tree, svm
 from sklearn.neighbors.nearest_centroid import NearestCentroid
