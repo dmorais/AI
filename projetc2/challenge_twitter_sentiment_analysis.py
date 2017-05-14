@@ -51,7 +51,7 @@ def main():
 
     api = auth_get_api()
     # get the tweets
-    public_tweets = api.search('Dana White', show_user=True)
+    public_tweets = api.search('Dana White', show_user=True, count=100)
 
     for tweet in public_tweets:
 
