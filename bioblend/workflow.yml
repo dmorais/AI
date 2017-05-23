@@ -1,0 +1,8 @@
+---
+- name: clean_seq
+  inputs:
+    - Test.fastq
+    - Best.fastq
+  dbkey:
+    - hg19
+

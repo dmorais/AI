@@ -48,9 +48,9 @@ hist = gi.histories.get_histories()
 #
 # print input
 
-wf = gi.workflows.show_workflow(workflow_id='c48e74a956218c05')
-# pprint.pprint(wf)
-print wf['inputs']
+# wf = gi.workflows.show_workflow(workflow_id='c48e74a956218c05')
+# # pprint.pprint(wf)
+# print wf['inputs']
 
 #
 # meta = gi.workflows.invoke_workflow(workflow_id='c48e74a956218c05', inputs={ '0': {'id': 'bbd44e69cb8906b5da5d44ce8df707a0', 'src': 'hda'}},
@@ -65,3 +65,10 @@ print wf['inputs']
 # file = gi.tools.upload_file(path="/Users/dmorais/Downloads/Galaxy_dataset_test/DAVID_TEST-GALAXY.bed", history_id='9fd8fbaec8d459d4',
 #                             file_name="David_test.bed", dbkey='hg19')
 # print file
+
+
+############################### Create history ####################
+
+
+new_hist = gi.histories.create_history(name="David_hist2")
+print new_hist['name']
