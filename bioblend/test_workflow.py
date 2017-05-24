@@ -12,15 +12,13 @@
 #    8- runs the workflow
 ############################################
 
-from bioblend import galaxy
-from collections import defaultdict, namedtuple
-import pprint
-import yaml
 import sys
+from collections import namedtuple
+import yaml
+from bioblend import galaxy
 
 
 def get_galaxy_instance(api_key):
-
     with open(api_key, 'r') as api:
         try:
             url, key = api.read().strip().split(',')
@@ -52,10 +50,6 @@ def read_workflow(yaml_file):
         workflow_exp.append(workflow_nametup)
 
     return workflow_exp
-
-    # THIS IS HOW TO LOOP THROUGH EACH WORKFLOW
-    # for item in workflow_exp:
-    #     print item.name
 
 
 def create_history(gi, name):
@@ -121,7 +115,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
 
         # call upload method in and return the workflow name and id
         else:
-            name, w_id = _upload_workflow(gi,workflow_name, workflow_path)
+            name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
             work = w(name, w_id)
             workflows.append(work)
 
@@ -129,7 +123,6 @@ def get_workflow_id(gi, workflow_name, workflow_path):
 
 
 def _upload_workflow(gi, workflow_name, workflow_path):
-
     work_obj = gi.workflows.import_workflow_from_local_path(file_local_path=workflow_path + workflow_name + ".ga")
     return work_obj['name'], work_obj['id']
 
@@ -147,8 +140,8 @@ def workflow_inputs(gi, workflow_id):
 
     work_obj = gi.workflows.show_workflow(workflow_id=workflow_id)
 
-    for k,v in work_obj['inputs'].iteritems():
-        w_input = w(k,v['label'])
+    for k, v in work_obj['inputs'].iteritems():
+        w_input = w(k, v['label'])
         workflow_input.append(w_input)
 
     return workflow_input
@@ -178,7 +171,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels):
     for item in inputs:
         if item.label in label_dict:
             input_dict[item.index] = {
-                "id" : label_dict[item.label],
+                "id": label_dict[item.label],
                 "src": "hda"
             }
 
@@ -186,14 +179,12 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels):
 
 
 def run_workflow(gi, input, history_id, workflow_id):
-
     run_work_obj = gi.workflows.invoke_workflow(workflow_id=workflow_id, inputs=input, history_id=history_id)
 
     return run_work_obj
 
 
 def main():
-
     if len(sys.argv) != 3:
         print "USAGE:\n\tpython {} api_key.txt yaml_file".format(sys.argv[0])
         sys.exit(1)
@@ -204,12 +195,9 @@ def main():
     gi = get_galaxy_instance(api_key)
     yaml_file = read_workflow(yaml_file_name)
 
-
-
     # #Loop through workflows in the yaml file
 
     for pipeline in yaml_file:
-
         history = create_history(gi, pipeline.name)
         datasets = upload_file(gi, pipeline.inputs, pipeline.inputs_path, history.id, pipeline.dbkey)
         g_workflow = get_workflow_id(gi, pipeline.name, pipeline.workflow_path)
