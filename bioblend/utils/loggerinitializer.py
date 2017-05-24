@@ -10,7 +10,7 @@ def initialize_logger(outputdir):
     # create console handler and set level to info
     handler = logging.StreamHandler()
     handler.setLevel(logging.INFO)
-    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(name) - %(message)s")
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
@@ -18,13 +18,21 @@ def initialize_logger(outputdir):
     # create error file handler and set level to error
     handler = logging.FileHandler(os.path.join(outputdir, "workflow_error.log"),"a", encoding=None, delay="true")
     handler.setLevel(logging.ERROR)
-    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s")
+    logging.Formatter()
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
     # create debug file handler and set level to debug
-    handler = logging.FileHandler(os.path.join(outputdir, "workflow.log"),"a")
+    handler = logging.FileHandler(os.path.join(outputdir, "workflow_debug.log"),"a")
     handler.setLevel(logging.DEBUG)
-    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s")
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    # create debug file handler and set level to debug
+    handler = logging.FileHandler(os.path.join(outputdir, "workflow_info.log"),"a")
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s", datefmt='%m/%d/%Y %I:%M:%S %p')
     handler.setFormatter(formatter)
     logger.addHandler(handler)

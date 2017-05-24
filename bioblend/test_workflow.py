@@ -19,12 +19,6 @@ from bioblend import galaxy
 import os
 from utils.loggerinitializer import *
 
-# Create the logs dir if it does not exists
-try:
-    os.makedirs(os.getcwd() + "logs")
-except OSError:
-    if not os.path.isdir(os.getcwd() + "logs"):
-        raise
 
 # Initialize logger
 initialize_logger(os.getcwd() + "/logs")
@@ -41,7 +35,7 @@ def get_galaxy_instance(api_key):
             return gi
 
         except IOError:
-            logging.error('Failed to open file api_key', exec_info=True)
+            logging.error('Failed to open file api_key', exc_info=True)
             print "cannot open", api_key
 
 
@@ -58,7 +52,7 @@ def read_workflow(yaml_file):
             workflows = yaml.load(stream)
 
         except yaml.YAMLError as exc:
-            logging.error('Failed to open file yaml file', exec_info=True)
+            logging.error('Failed to open file yaml file', exc_info=True)
             print exc
 
     # Create namedtuple from dictionary
@@ -212,7 +206,7 @@ def run_workflow(gi, input, history_id, workflow_id):
 def main():
     if len(sys.argv) != 3:
         print "USAGE:\n\tpython {} api_key.txt yaml_file".format(sys.argv[0])
-        logging.error("Bad args", exec_info=True)
+        logging.error("Bad args", exc_info=True)
         sys.exit(1)
 
     api_key = sys.argv[1]
@@ -230,6 +224,7 @@ def main():
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, pipeline.inputs, pipeline.inputs_label)
         invok_workflow = run_workflow(gi, input_dict, history.id, g_workflow.id)
 
+    logging.info("DONE, check history when workflow complete")
 
 if __name__ == "__main__":
     main()
