@@ -3,8 +3,9 @@
   workflow_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/
   inputs:
     - Test.fastq
-    - Best.fastq
   inputs_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/
+  inputs_label:
+    - fastq
   dbkey:
     - hg19
 
