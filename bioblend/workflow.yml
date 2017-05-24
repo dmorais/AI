@@ -1,9 +1,9 @@
 ---
 - name: clean_seq
-  workflow_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/
+  workflow_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/workflows/
   inputs:
     - Test.fastq
-  inputs_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/
+  inputs_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/datasets/
   inputs_label:
     - fastq
   dbkey:

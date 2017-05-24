@@ -1,0 +1,30 @@
+import logging
+import os.path
+
+
+def initialize_logger(outputdir):
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    # create console handler and set level to info
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(name) - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+
+    # create error file handler and set level to error
+    handler = logging.FileHandler(os.path.join(outputdir, "workflow_error.log"),"a", encoding=None, delay="true")
+    handler.setLevel(logging.ERROR)
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    # create debug file handler and set level to debug
+    handler = logging.FileHandler(os.path.join(outputdir, "workflow.log"),"a")
+    handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(levelname)s - %(asctime)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)

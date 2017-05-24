@@ -16,9 +16,24 @@ import sys
 from collections import namedtuple
 import yaml
 from bioblend import galaxy
+import os
+from utils.loggerinitializer import *
 
+# Create the logs dir if it does not exists
+try:
+    os.makedirs(os.getcwd() + "logs")
+except OSError:
+    if not os.path.isdir(os.getcwd() + "logs"):
+        raise
+
+# Initialize logger
+initialize_logger(os.getcwd() + "/logs")
 
 def get_galaxy_instance(api_key):
+    '''
+    :param api_key:
+    :return: a galaxy instance object
+    '''
     with open(api_key, 'r') as api:
         try:
             url, key = api.read().strip().split(',')
@@ -26,6 +41,7 @@ def get_galaxy_instance(api_key):
             return gi
 
         except IOError:
+            logging.error('Failed to open file api_key', exec_info=True)
             print "cannot open", api_key
 
 
@@ -42,6 +58,7 @@ def read_workflow(yaml_file):
             workflows = yaml.load(stream)
 
         except yaml.YAMLError as exc:
+            logging.error('Failed to open file yaml file', exec_info=True)
             print exc
 
     # Create namedtuple from dictionary
@@ -58,7 +75,7 @@ def create_history(gi, name):
     :param name: history name
     :return: namedtuple with a (hist_name,hist_id)
     '''
-
+    logging.info("Creating history")
     data = namedtuple("history", 'name id')
 
     hist_obj = gi.histories.create_history(name=name)
@@ -69,14 +86,13 @@ def create_history(gi, name):
 
 def upload_file(gi, input, input_path, hist_id, dbkey=None):
     '''
-
     :param gi: a galaxy instance object
     :param input: a list of input files
     :param hist_id: history ID
     :param dbkey: a list of dbkey (optional)
     :return: A list of namedtuples with dataset (name,id)
     '''
-
+    logging.info("Creating uploading file to Galaxy")
     dataset = []
 
     for i in range(len(input)):
@@ -94,13 +110,12 @@ def upload_file(gi, input, input_path, hist_id, dbkey=None):
 
 def get_workflow_id(gi, workflow_name, workflow_path):
     '''
-
     :param gi: a galaxy instance object
     :param workflow_name: workflow name (str)
     :param workflow_path: workflow path (str)
     :return: a namedtuples with workflow name, id
     '''
-
+    logging.info("Getting workflow Id")
     workflows = []
     work_obj = gi.workflows.get_workflows()
 
@@ -123,18 +138,19 @@ def get_workflow_id(gi, workflow_name, workflow_path):
 
 
 def _upload_workflow(gi, workflow_name, workflow_path):
+
+    logging.info("Uploading new Workflow")
     work_obj = gi.workflows.import_workflow_from_local_path(file_local_path=workflow_path + workflow_name + ".ga")
     return work_obj['name'], work_obj['id']
 
 
 def workflow_inputs(gi, workflow_id):
     '''
-
     :param gi:
     :param workflow_id:
     :return: a list of namedtuples of inputs (index, label)
     '''
-
+    logging.info("Getting workflow inputs")
     workflow_input = []
     w = namedtuple('inputs', 'index label')
 
@@ -149,7 +165,6 @@ def workflow_inputs(gi, workflow_id):
 
 def create_wf_input_dict(gi, datasets, inputs, data, labels):
     '''
-
     :param gi: galaxy instance object
     :param datasets: a list of namedtuples with dataset name, id
     :param inputs: a list of namedtuples with workflow inputs index, label
@@ -158,6 +173,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels):
     :return: a dictionary of dictionary to be used as input in the workflow invocation
     '''
 
+    logging.info("Creating input dictionary")
     input_dict = dict()
     label_dict = dict(zip(data, labels))
 
@@ -179,6 +195,15 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels):
 
 
 def run_workflow(gi, input, history_id, workflow_id):
+    '''
+    :param gi:
+    :param input: a dictionary of dictionary with the inputs of each workflow
+    :param history_id:
+    :param workflow_id:
+    :return: a dictionary with the pipeline invocation.
+    '''
+
+    logging.info("Invoking workflow")
     run_work_obj = gi.workflows.invoke_workflow(workflow_id=workflow_id, inputs=input, history_id=history_id)
 
     return run_work_obj
@@ -187,6 +212,7 @@ def run_workflow(gi, input, history_id, workflow_id):
 def main():
     if len(sys.argv) != 3:
         print "USAGE:\n\tpython {} api_key.txt yaml_file".format(sys.argv[0])
+        logging.error("Bad args", exec_info=True)
         sys.exit(1)
 
     api_key = sys.argv[1]
@@ -195,8 +221,7 @@ def main():
     gi = get_galaxy_instance(api_key)
     yaml_file = read_workflow(yaml_file_name)
 
-    # #Loop through workflows in the yaml file
-
+    # Loop through workflows in the yaml file
     for pipeline in yaml_file:
         history = create_history(gi, pipeline.name)
         datasets = upload_file(gi, pipeline.inputs, pipeline.inputs_path, history.id, pipeline.dbkey)
