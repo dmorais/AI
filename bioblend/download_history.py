@@ -1,6 +1,5 @@
 import sys
 from collections import namedtuple
-import yaml
 from bioblend import galaxy
 import os
 from utils.gihistory import *
@@ -9,7 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-initialize_logger(os.getcwd() + "logs/download", logger)
+initialize_logger(os.getcwd() + "/logs/download", logger)
 
 
 def prepare_download(gi, histories):

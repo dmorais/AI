@@ -22,7 +22,7 @@ from utils.loggerinitializer import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-initialize_logger(os.getcwd() + "logs/", logger)
+initialize_logger(os.getcwd() + "/logs/", logger)
 
 def get_galaxy_instance(api_key):
     '''
@@ -225,7 +225,7 @@ def main():
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, pipeline.inputs, pipeline.inputs_label)
         invok_workflow = run_workflow(gi, input_dict, history.id, g_workflow.id)
 
-    logging.info("DONE, check history when workflow complete")
+    logging.info("DONE, check history when workflow completes")
 
 if __name__ == "__main__":
     main()
