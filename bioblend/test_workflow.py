@@ -20,8 +20,9 @@ import os
 from utils.loggerinitializer import *
 
 
-# Initialize logger
-initialize_logger(os.getcwd() + "/logs")
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+initialize_logger(os.getcwd() + "/logs/", logger)
 
 def get_galaxy_instance(api_key):
     '''
