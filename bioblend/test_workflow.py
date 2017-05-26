@@ -17,7 +17,10 @@ from collections import namedtuple
 import yaml
 from bioblend import galaxy
 import os
+import logging
 from utils.loggerinitializer import *
+from distutils.dir_util import mkpath
+
 
 mkpath(os.getcwd() + "/logs/")
 logger = logging.getLogger(__name__)
@@ -36,7 +39,7 @@ def get_galaxy_instance(api_key):
             return gi
 
         except IOError:
-            logging.error('Failed to open file api_key', exc_info=True)
+            logger.error('Failed to open file api_key', exc_info=True)
             print "cannot open", api_key
 
 
@@ -53,7 +56,7 @@ def read_workflow(yaml_file):
             workflows = yaml.load(stream)
 
         except yaml.YAMLError as exc:
-            logging.error('Failed to open file yaml file', exc_info=True)
+            logger.error('Failed to open file yaml file', exc_info=True)
             print exc
 
     # Create namedtuple from dictionary
@@ -70,7 +73,7 @@ def create_history(gi, name):
     :param name: history name
     :return: namedtuple with a (hist_name,hist_id)
     '''
-    logging.info("Creating history")
+    logger.info("Creating history")
     data = namedtuple("history", 'name id')
 
     hist_obj = gi.histories.create_history(name=name)
@@ -87,7 +90,7 @@ def upload_file(gi, input, input_path, hist_id, dbkey=None):
     :param dbkey: a list of dbkey (optional)
     :return: A list of namedtuples with dataset (name,id)
     '''
-    logging.info("Creating uploading file to Galaxy")
+    logger.info("Uploading file to Galaxy")
     dataset = []
 
     for i in range(len(input)):
@@ -110,7 +113,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
     :param workflow_path: workflow path (str)
     :return: a namedtuples with workflow name, id
     '''
-    logging.info("Getting workflow Id")
+    logger.info("Getting workflow Id")
     workflows = []
     work_obj = gi.workflows.get_workflows()
 
@@ -134,7 +137,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
 
 def _upload_workflow(gi, workflow_name, workflow_path):
 
-    logging.info("Uploading new Workflow")
+    logger.info("Uploading new Workflow")
     work_obj = gi.workflows.import_workflow_from_local_path(file_local_path=workflow_path + workflow_name + ".ga")
     return work_obj['name'], work_obj['id']
 
@@ -145,7 +148,7 @@ def workflow_inputs(gi, workflow_id):
     :param workflow_id:
     :return: a list of namedtuples of inputs (index, label)
     '''
-    logging.info("Getting workflow inputs")
+    logger.info("Getting workflow inputs")
     workflow_input = []
     w = namedtuple('inputs', 'index label')
 
@@ -168,7 +171,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels):
     :return: a dictionary of dictionary to be used as input in the workflow invocation
     '''
 
-    logging.info("Creating input dictionary")
+    logger.info("Creating input dictionary")
     input_dict = dict()
     label_dict = dict(zip(data, labels))
 
@@ -198,7 +201,7 @@ def run_workflow(gi, input, history_id, workflow_id):
     :return: a dictionary with the pipeline invocation.
     '''
 
-    logging.info("Invoking workflow")
+    logger.info("Invoking workflow")
     run_work_obj = gi.workflows.invoke_workflow(workflow_id=workflow_id, inputs=input, history_id=history_id)
 
     return run_work_obj
@@ -210,6 +213,7 @@ def main():
         logging.error("Bad args", exc_info=True)
         sys.exit(1)
 
+    logger.info("############")
     api_key = sys.argv[1]
     yaml_file_name = sys.argv[2]
 
@@ -225,7 +229,7 @@ def main():
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, pipeline.inputs, pipeline.inputs_label)
         invok_workflow = run_workflow(gi, input_dict, history.id, g_workflow.id)
 
-    logging.info("DONE, check history when workflow completes")
+    logger.info("DONE, check history when workflow completes")
 
 if __name__ == "__main__":
     main()
