@@ -9,7 +9,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-initialize_logger(os.getcwd() + "/logs/download", logger)
+initialize_logger(os.getcwd() + "logs/download", logger)
 
 
 def prepare_download(gi, histories):

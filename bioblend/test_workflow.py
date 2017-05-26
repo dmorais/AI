@@ -22,7 +22,7 @@ from utils.loggerinitializer import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-initialize_logger(os.getcwd() + "/logs/", logger)
+initialize_logger(os.getcwd() + "logs/", logger)
 
 def get_galaxy_instance(api_key):
     '''
