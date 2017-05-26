@@ -5,7 +5,10 @@ import os
 from utils.gihistory import *
 from utils.loggerinitializer import *
 import logging
+from distutils.dir_util import mkpath
 
+
+mkpath(os.getcwd() + "/logs/download")
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 initialize_logger(os.getcwd() + "/logs/download", logger)
@@ -62,10 +65,14 @@ def main():
     hist_name = None if len(sys.argv) < 3 else sys.argv[2]
     histories = get_history(gi, hist_name)
 
-    jehas = prepare_download(gi,histories)
+    logger.info("Creating the Download dir (if necessary)")
+    down_dir = os.getcwd() + "/download"
+    mkpath(os.getcwd() + "/download")
+
+    jehas = prepare_download(gi, histories)
 
     for item in jehas:
-        dfile = open("test/" + item.name + ".tar.gz", "wb")
+        dfile = open(down_dir + "/" + item.name + ".tar.gz", "wb")
         dhist = downlad_history(gi, item.id, item.jeha, dfile)
 
         logger.info("The Download of {} is {}".format(item.name, dhist))

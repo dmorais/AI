@@ -19,7 +19,7 @@ from bioblend import galaxy
 import os
 from utils.loggerinitializer import *
 
-
+mkpath(os.getcwd() + "/logs/")
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 initialize_logger(os.getcwd() + "/logs/", logger)
