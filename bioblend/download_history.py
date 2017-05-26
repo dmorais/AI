@@ -55,7 +55,7 @@ def main():
         print "USAGE:\n\tpython {} api_key.txt <history name (optional) >\n\n\tNOTE: if not history name is given" \
               " all histories will be downloaded".format(sys.argv[0])
         sys.exit(1)
-        
+
     logger.info("############")
     apiFile = open(sys.argv[1])
     url, key = apiFile.read().strip().split(',')
