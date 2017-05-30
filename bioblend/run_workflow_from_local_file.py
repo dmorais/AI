@@ -15,7 +15,7 @@
 # Galaxy resets the input label (or name depending on the version) back to input dataset
 # In this case open the workflow editor in Galaxy and rename the label (or name) of the inputs
 # So it matches the label in the yaml file.
-############################################
+##############################################
 
 import sys
 from collections import namedtuple
