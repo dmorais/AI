@@ -118,6 +118,9 @@ def get_workflow_id(gi, workflow_name, workflow_path):
     workflows = []
     work_obj = gi.workflows.get_workflows()
 
+    print work_obj
+    sys.exit(0)
+
     w = namedtuple('workflow', 'name id')
     work = ''
     for item in work_obj:
@@ -135,7 +138,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
             work = w(name, w_id)
             workflows.append(work)
 
-    print work
+
     return work
 
 
