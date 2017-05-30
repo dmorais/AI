@@ -67,8 +67,9 @@ def main():
 
         datasets = get_lib_datasets(gi, item.lib_name, item.inputs)
         g_workflow = get_workflow_id(gi, item.name,logger)
+        g_inputs = workflow_inputs(gi, g_workflow.id, logger)
 
-        print g_workflow
+        print g_inputs
         #g_inputs = workflow_inputs(gi, g_workflow.id)
 
 

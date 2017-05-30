@@ -105,7 +105,7 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     return work
 
 
-def _upload_workflow(gi, workflow_name, workflow_path):
+def _upload_workflow(gi, workflow_name, workflow_path, logger):
 
     logger.info("Uploading new Workflow")
     work_obj = gi.workflows.import_workflow_from_local_path(file_local_path=workflow_path + workflow_name + ".ga")
@@ -113,7 +113,7 @@ def _upload_workflow(gi, workflow_name, workflow_path):
 
 
 
-def workflow_inputs(gi, workflow_id):
+def workflow_inputs(gi, workflow_id, logger):
     '''
     :param gi:
     :param workflow_id:
