@@ -160,7 +160,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
     for item in datasets:
         if item.name in label_dict:
             label_dict[label_dict[item.name]] = item.id
-            label_dict.pop(item.name)
+            #label_dict.pop(item.name)
 
     pprint.pprint(datasets)
     pprint.pprint(label_dict)
