@@ -163,7 +163,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
     return input_dict
 
 
-def run_workflow(gi, input, history_id=None, history_name=None, workflow_id, logger):
+def run_workflow(gi, input, workflow_id, logger, history_id=None, history_name=None):
     '''
     :param gi:
     :param input: a dictionary of dictionary with the inputs of each workflow
