@@ -127,7 +127,7 @@ def workflow_inputs(gi, workflow_id, logger):
 
     work_obj = gi.workflows.show_workflow(workflow_id=workflow_id)
     pprint.pprint(work_obj)
-    sys.exist(0)
+    sys.exit(0)
 
     for k, v in work_obj['inputs'].iteritems():
         w_input = w(k, v['label'])
