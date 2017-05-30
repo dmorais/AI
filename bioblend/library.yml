@@ -5,4 +5,4 @@
   folder: dirty_fastq
   inputs:
     - Test.fastq
-  input_path: datasets/Test.fastq
+  input_path: datasets
