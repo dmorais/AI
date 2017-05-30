@@ -68,7 +68,7 @@ def read_workflow(yaml_file):
 
 
 
-def get_workflow_id(gi, workflow_name, workflow_path=None):
+def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     '''
     :param gi: a galaxy instance object
     :param workflow_name: workflow name (str)
