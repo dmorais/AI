@@ -29,8 +29,11 @@ def _fetch_lib_info(gi, lib_name):
 
     lib_obj = gi.libraries.get_libraries(name= lib_name)
 
-    print lib_obj
-    sys.exit(0)
+    for item in lib_obj:
+        if item['name'] == lib_name:
+            print item['name'], item['id']
+
+    sys.exit()
 
 
 
