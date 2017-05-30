@@ -78,17 +78,14 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     :return: a namedtuples with workflow name, id
     '''
     logger.info("Getting workflow Id")
-    workflows = []
     work_obj = gi.workflows.get_workflows()
 
     w = namedtuple('workflow', 'name id')
-    work = ''
 
     if len(work_obj) == 0:
         name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
         work = w(name, w_id)
         return work
-        #workflows.append(work)
 
     else:
         for item in work_obj:
@@ -97,17 +94,12 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
             if item['name'] == workflow_name or item['name'] + ' (imported from API)':
                 work = w(item['name'], item['id'])
                 return work
-                #workflows.append(work)
 
             # call upload method in and return the workflow name and id
             else:
                 name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
                 work = w(name, w_id)
                 return work
-                #workflows.append(work)
-
-
-    #return workflows
 
 
 def _upload_workflow(gi, workflow_name, workflow_path, logger):
@@ -129,8 +121,6 @@ def workflow_inputs(gi, workflow_id, logger):
     w = namedtuple('inputs', 'index label')
 
     work_obj = gi.workflows.show_workflow(workflow_id=workflow_id)
-    # pprint.pprint(work_obj)
-    # sys.exit(0)
 
     for k, v in work_obj['inputs'].iteritems():
         w_input = w(k, v['label'])
@@ -160,19 +150,13 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
             label_dict[label_dict[item.name]] = item.id
             #label_dict.pop(item.name)
 
-    # pprint.pprint(datasets)
-    # pprint.pprint(label_dict)
-    # sys.exit()
-    # Map each index to a label dictionary
+     # Map each index to a label dictionary
     for item in inputs:
         if item.label in label_dict:
             input_dict[item.index] = {
                 "id": label_dict[item.label],
                 "src": src
             }
-
-    # pprint.pprint(input_dict)
-    # sys.exit()
     return input_dict
 
 

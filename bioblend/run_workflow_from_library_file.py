@@ -70,11 +70,7 @@ def main():
     for item in yaml_file:
         datasets = get_lib_datasets(gi, item.lib_name, item.inputs)
         g_workflow = get_workflow_id(gi, item.name, logger)
-
-        # print "####\n workflow", g_workflow
         g_inputs = workflow_inputs(gi, g_workflow.id, logger)
-        # print g_inputs
-        # print '####'
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, item.inputs, item.input_label, 'ld', logger)
 
         run_workflow(gi=gi, input=input_dict, history_id=None, history_name=item.name,
