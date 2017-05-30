@@ -161,3 +161,19 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
             }
 
     return input_dict
+
+
+def run_workflow(gi, input, history_id=None, history_name=None, workflow_id):
+    '''
+    :param gi:
+    :param input: a dictionary of dictionary with the inputs of each workflow
+    :param history_id:
+    :param workflow_id:
+    :return: a dictionary with the pipeline invocation.
+    '''
+
+    logger.info("Invoking workflow")
+    run_work_obj = gi.workflows.invoke_workflow(workflow_id=workflow_id, inputs=input,
+                                                history_id=history_id, history_name=history_name, logger)
+
+    return run_work_obj
