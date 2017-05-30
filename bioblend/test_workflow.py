@@ -129,6 +129,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
 
         # call upload method in and return the workflow name and id
         else:
+            print "HERERER"
             name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
             work = w(name, w_id)
             workflows.append(work)
