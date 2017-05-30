@@ -39,7 +39,7 @@ def create_folder(gi, lib_id, name):
     folder_obj = gi.libraries.create_folder(library_id=lib_id, folder_name=name)
 
     f = namedtuple('folder', 'id name')
-    folder = f(folder_obj['id'], folder_obj['name'])
+    folder = f(folder_obj[0]['id'], folder_obj[0]['name'])
 
     return folder
 
