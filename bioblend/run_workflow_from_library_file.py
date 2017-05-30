@@ -75,10 +75,10 @@ def main():
 
 ############### Upload file from url to lib #########################
 
-    url_file_obj = gi.libraries.upload_file_from_url(library_id='613e73b56070623c', file_url='https://datahub-qfw3js0t.udes.genap.ca/genap2/data-test/bcftools-test/concat.1.a.vcf',
-                                                     file_type='vcf')
-
-    print url_file_obj
+    # url_file_obj = gi.libraries.upload_file_from_url(library_id='613e73b56070623c', file_url='https://datahub-qfw3js0t.udes.genap.ca/genap2/data-test/bcftools-test/concat.1.a.vcf',
+    #                                                  file_type='vcf')
+    #
+    # print url_file_obj
 
 
 
