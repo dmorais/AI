@@ -118,25 +118,27 @@ def get_workflow_id(gi, workflow_name, workflow_path):
     workflows = []
     work_obj = gi.workflows.get_workflows()
 
-    print work_obj
-    sys.exit(0)
-
     w = namedtuple('workflow', 'name id')
     work = ''
-    for item in work_obj:
 
-        # If workflow already exist (or has been already auploaded via API) return its name and id
-        if item['name'] == workflow_name or item['name'] + ' (imported from API)':
-            print "uhhh"
-            work = w(item['name'], item['id'])
-            workflows.append(work)
+    if len(work_obj) == 0:
+        name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
+        work = w(name, w_id)
+        workflows.append(work)
 
-        # call upload method in and return the workflow name and id
-        else:
-            print "HERERER"
-            name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
-            work = w(name, w_id)
-            workflows.append(work)
+    else:
+        for item in work_obj:
+
+            # If workflow already exist (or has been already auploaded via API) return its name and id
+            if item['name'] == workflow_name or item['name'] + ' (imported from API)':
+                work = w(item['name'], item['id'])
+                workflows.append(work)
+
+            # call upload method in and return the workflow name and id
+            else:
+                name, w_id = _upload_workflow(gi, workflow_name, workflow_path)
+                work = w(name, w_id)
+                workflows.append(work)
 
 
     return work
