@@ -70,7 +70,7 @@ def main():
         g_inputs = workflow_inputs(gi, g_workflow.id, logger)
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, item.inputs, item.input_label, 'ld', logger)
         invok_workflow = run_workflow(gi=gi, input_dict=input_dict, history_id=None, history_name=item.name,
-                                      g_workflow.id, logger)
+                                      workflow_id=g_workflow.id, logger=logger)
 
 
 
