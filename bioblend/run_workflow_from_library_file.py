@@ -46,9 +46,9 @@ def _fetch_lib_info(gi, lib_name, inputs):
 
     for item in lib_content_obj:
         print item
-        # if item['type'] == "file" and item['name'] in inputs:
-        #     lib = f(item['name'], item['id'])
-        #     files.append(lib)
+        if item['type'] == "file" and os.path.basename(item['name']) in inputs:
+            lib = f(item['name'], item['id'])
+            files.append(lib)
 
 
     print files
