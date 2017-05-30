@@ -192,8 +192,8 @@ def main():
     api_key = sys.argv[1]
     yaml_file_name = sys.argv[2]
 
-    gi = get_galaxy_instance(api_key)
-    yaml_file = read_workflow(yaml_file_name)
+    gi = get_galaxy_instance(api_key, logger)
+    yaml_file = read_workflow(yaml_file_name, logger)
 
     # Loop through workflows in the yaml file
     for pipeline in yaml_file:
