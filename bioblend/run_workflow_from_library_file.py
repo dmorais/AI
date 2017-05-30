@@ -66,6 +66,7 @@ def main():
     for item in yaml_file:
 
         datasets = get_lib_datasets(gi, item.lib_name, item.inputs)
+        print datasets
 
 
 
