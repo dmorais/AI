@@ -30,7 +30,7 @@ def _fetch_lib_info(gi, lib_name):
     lib_obj = gi.libraries.get_libraries(name= lib_name)
 
     for item in lib_obj:
-        if item['name'] == lib_name:
+        if item['name'] == lib_name and item['deleted'] is False:
             print item['name'], item['id']
 
     sys.exit()
