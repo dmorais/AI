@@ -27,7 +27,7 @@ def get_history(gi, name=None):
 
 
 
-def get_galaxy_instance(api_key):
+def get_galaxy_instance(api_key, logger):
     '''
     :param api_key:
     :return: a galaxy instance object
@@ -43,7 +43,7 @@ def get_galaxy_instance(api_key):
             print "cannot open", api_key
 
 
-def read_workflow(yaml_file):
+def read_workflow(yaml_file, logger):
     '''
     :param yaml_file:
     :return: workflow_exp: a list of named tuples (can be accessed as objects)
