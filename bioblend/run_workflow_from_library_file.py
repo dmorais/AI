@@ -19,25 +19,46 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 
 
 
-def get_lib_datasets(gi, lib_name):
+def get_lib_datasets(gi, lib_name, inputs):
 
-    datasets = _fetch_lib_info(gi, lib_name)
+    datasets = _fetch_lib_info(gi, lib_name, inputs)
 
 
 
-def _fetch_lib_info(gi, lib_name):
+def _fetch_lib_info(gi, lib_name, inputs):
 
-    lib_obj = gi.libraries.get_libraries(name= lib_name)
+    lib_obj = gi.libraries.get_libraries(name=lib_name)
+
+    lib_ids = []
 
     for item in lib_obj:
-        if item['name'] == lib_name and item['deleted'] == True:
-            print item['name'], item['id'], item['deleted']
+        if item['name'] == lib_name and item['deleted'] == False:
 
-    sys.exit()
-
-
+            # Put id inside of a list in case there are more than one library with the same name
+            lib_ids.append(item['id'])
 
 
+    f = namedtuple('file', 'name id')
+    files = []
+
+    for l_id in lib_ids:
+        lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
+
+        for item in lib_content_obj:
+            if item['type'] == "file" and item['name'] in inputs:
+                lib = f(item['name'], item['id'])
+                files.append(lib)
+
+
+    print files
+    sys.exit(0)
+
+   # for item in libre_obj:
+    #    if item['type'] == 'file':
+    #        lib = l(item['name'], item['id'])
+    #        library.append(lib)
+    #
+    # print library
 
 
 def main():
@@ -55,7 +76,7 @@ def main():
 
     for item in yaml_file:
 
-        datasets = get_lib_datasets(gi, item.lib_name)
+        datasets = get_lib_datasets(gi, item.lib_name, item.inputs)
 
 
 

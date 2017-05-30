@@ -4,4 +4,6 @@
 - name: clean_seq
   inputs:
     - Test.fastq
-  lib_name: seq_cleans
+  label:
+    - fastq
+  lib_name: clean_seq
