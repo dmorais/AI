@@ -38,17 +38,18 @@ def get_lib_datasets(gi, lib_name, inputs):
             lib_ids.append(item['id'])
 
     logger.info("Getting Library Content")
-    for l_id in lib_ids:
-        lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
 
     f = namedtuple('file', 'name id')
     files = []
-    logger.info("Getting Files name and Id")
 
-    for item in lib_content_obj:
-        if item['type'] == "file" and os.path.basename(item['name']) in inputs:
-            lib = f(os.path.basename(item['name']), item['id'])
-            files.append(lib)
+    for l_id in lib_ids:
+        lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
+
+        logger.info("Getting Files name and Id")
+        for item in lib_content_obj:
+            if item['type'] == "file" and os.path.basename(item['name']) in inputs:
+                lib = f(os.path.basename(item['name']), item['id'])
+                files.append(lib)
 
     return files
 
@@ -71,7 +72,7 @@ def main():
         g_workflow = get_workflow_id(gi, item.name, logger)
         g_inputs = workflow_inputs(gi, g_workflow.id, logger)
         input_dict = create_wf_input_dict(gi, datasets, g_inputs, item.inputs, item.input_label, 'ld', logger)
-        invok_workflow = run_workflow(gi=gi, input=input_dict, history_id=None, history_name=item.name,
+        run_workflow(gi=gi, input=input_dict, history_id=None, history_name=item.name,
                                       workflow_id=g_workflow.id, logger=logger)
 
     logger.info("Done. Your pipeline must be running on Galaxy")
