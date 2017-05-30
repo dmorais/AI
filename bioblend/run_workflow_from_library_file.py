@@ -38,16 +38,16 @@ def _fetch_lib_info(gi, lib_name, inputs):
             lib_ids.append(item['id'])
 
 
-    f = namedtuple('file', 'name id')
+    f = namedtuple('file', 'path, name id')
     files = []
 
     for l_id in lib_ids:
         lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
 
     for item in lib_content_obj:
-        print item
+
         if item['type'] == "file" and os.path.basename(item['name']) in inputs:
-            lib = f(item['name'], item['id'])
+            lib = f(item['name'], os.path.basename(item['name']), item['id'])
             files.append(lib)
 
 
