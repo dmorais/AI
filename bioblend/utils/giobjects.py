@@ -167,6 +167,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
                 "src": src
             }
 
+    pprint.pprint(input_dict)
     return input_dict
 
 
