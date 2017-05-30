@@ -163,6 +163,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
             label_dict.pop(item.name)
 
     pprint.pprint(datasets)
+    pprint.pprint(label_dict)
     sys.exit()
     # Map each index to a label dictionary
     for item in inputs:
