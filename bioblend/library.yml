@@ -1,6 +1,6 @@
 ---
 
-- name: seq_clean
+- name: seq_cleans
   description: My test API lib
   folder: dirty_fastq
   inputs:
