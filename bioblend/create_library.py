@@ -32,16 +32,16 @@ def create_libary(gi, name, description):
     return library
 
 
-def create_folder(gi, lib_id, name):
-
-
-    logger.info("Creating Folder ", name)
-    folder_obj = gi.libraries.create_folder(library_id=lib_id, folder_name=name)
-
-    f = namedtuple('folder', 'id name')
-    folder = f(folder_obj[0]['id'], folder_obj[0]['name'])
-
-    return folder
+# def create_folder(gi, lib_id, name):
+#
+#
+#     logger.info("Creating Folder ", name)
+#     folder_obj = gi.libraries.create_folder(library_id=lib_id, folder_name=name)
+#
+#     f = namedtuple('folder', 'id name')
+#     folder = f(folder_obj[0]['id'], folder_obj[0]['name'])
+#
+#     return folder
 
 
 
@@ -62,7 +62,7 @@ def main():
     for item in yaml_file:
 
         library = create_libary(gi, item.name, item.description)
-        folder = create_folder(gi, library.id, item.folder)
+        #folder = create_folder(gi, library.id, item.folder)
 
 
     logger.info("Done")
