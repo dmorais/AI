@@ -44,14 +44,15 @@ def _fetch_lib_info(gi, lib_name, inputs):
     for l_id in lib_ids:
         lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
 
-        for item in lib_content_obj:
-            if item['type'] == "file" and item['name'] in inputs:
-                lib = f(item['name'], item['id'])
-                files.append(lib)
+    for item in lib_content_obj:
+        print item
+        # if item['type'] == "file" and item['name'] in inputs:
+        #     lib = f(item['name'], item['id'])
+        #     files.append(lib)
 
 
     print files
-    sys.exit(0)
+    sys.exit()
 
    # for item in libre_obj:
     #    if item['type'] == 'file':
