@@ -162,6 +162,8 @@ def workflow_inputs(gi, workflow_id):
     w = namedtuple('inputs', 'index label')
 
     work_obj = gi.workflows.show_workflow(workflow_id=workflow_id)
+    print work_obj
+    sys.exit(0)
 
     for k, v in work_obj['inputs'].iteritems():
         w_input = w(k, v['label'])
