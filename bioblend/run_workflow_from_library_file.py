@@ -66,7 +66,10 @@ def main():
     for item in yaml_file:
 
         datasets = get_lib_datasets(gi, item.lib_name, item.inputs)
-        print datasets
+        g_workflow = get_workflow_id(gi, item.name)
+
+        print g_workflow
+        #g_inputs = workflow_inputs(gi, g_workflow.id)
 
 
 
