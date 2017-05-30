@@ -85,9 +85,10 @@ def main():
         library = create_libary(gi, item.name, item.description)
         folder = create_folder(gi, library.id, item.folder)
 
-        if item.inputs:
+        if hasattr(item, 'input'):
 
             uploads = upload_from_local(gi, library.id, item.input_path, item.inputs, folder.id)
+
         else:
             uploads = upload_from_url(gi, library.id, item.urls, folder.id)
 
