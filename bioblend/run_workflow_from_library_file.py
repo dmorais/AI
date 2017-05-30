@@ -19,6 +19,21 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 
 
 
+def get_lib_datasets(gi, lib_name):
+
+    datasets = _fetch_lib_info(gi, lib_name)
+
+
+
+def _fetch_lib_info(gi, lib_name):
+
+    lib_obj = gi.libraries.get_libraries(name= lib_name)
+
+    print lib_obj
+    sys.exit(0)
+
+
+
 
 
 
@@ -28,12 +43,25 @@ def main():
         logging.error("Bad args", exc_info=True)
         sys.exit(1)
 
-    logger.info("############")
+    logger.info("############ STARTTING " + sys.argv[0] + " ########" )
     api_key = sys.argv[1]
     yaml_file_name = sys.argv[2]
 
     gi = get_galaxy_instance(api_key)
     yaml_file = read_workflow(yaml_file_name)
+
+    for item in yaml_file:
+
+        datasets = get_lib_datasets(gi, item.lib_name)
+
+
+
+
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 
@@ -79,17 +107,3 @@ def main():
     #                                                  file_type='vcf')
     #
     # print url_file_obj
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    main()

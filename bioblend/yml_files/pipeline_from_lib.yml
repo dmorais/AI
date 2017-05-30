@@ -1,0 +1,7 @@
+---
+
+
+- name: clean_seq
+  inputs:
+    - Test.fastq
+  lib_name: seq_cleans
