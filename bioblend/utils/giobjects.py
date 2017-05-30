@@ -153,7 +153,7 @@ def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
     input_dict = dict()
     label_dict = dict(zip(data, labels))
 
-
+    pprint.pprint(label_dict)
 
 
     # Map each dataset name to a label
