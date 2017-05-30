@@ -135,6 +135,7 @@ def get_workflow_id(gi, workflow_name, workflow_path):
             work = w(name, w_id)
             workflows.append(work)
 
+    print work
     return work
 
 
