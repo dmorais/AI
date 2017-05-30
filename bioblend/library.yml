@@ -1,8 +1,13 @@
 ---
 
-- name: seq_cleans
-  description: My test API lib
-  folder: dirty_fastq
-  inputs:
-    - Test.fastq
-  input_path: datasets
+#- name: seq_cleans
+#  description: My test API lib
+#  folder: dirty_fastq
+#  inputs:
+#    - Test.fastq
+#  input_path: datasets
+
+- name: from_hub
+  description: Uploaded from data hub through API
+  urls:
+    - https://datahub-qfw3js0t.udes.genap.ca/genap2/data-test/bcftools-test/concat.1.a.vcf
