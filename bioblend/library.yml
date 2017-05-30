@@ -9,5 +9,6 @@
 
 - name: from_hub
   description: Uploaded from data hub through API
+  folder: dirty_vcf
   urls:
     - https://datahub-qfw3js0t.udes.genap.ca/genap2/data-test/bcftools-test/concat.1.a.vcf
