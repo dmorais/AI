@@ -19,14 +19,10 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 
 
 
+
 def get_lib_datasets(gi, lib_name, inputs):
 
-    datasets = _fetch_lib_info(gi, lib_name, inputs)
-
-
-
-def _fetch_lib_info(gi, lib_name, inputs):
-
+    logger.info("Getting Library id" )
     lib_obj = gi.libraries.get_libraries(name=lib_name)
 
     lib_ids = []
@@ -37,29 +33,21 @@ def _fetch_lib_info(gi, lib_name, inputs):
             # Put id inside of a list in case there are more than one library with the same name
             lib_ids.append(item['id'])
 
-
-    f = namedtuple('file', 'path, name id')
-    files = []
-
+    logger.info("Getting Library Content" )
     for l_id in lib_ids:
         lib_content_obj = gi.libraries.show_library(library_id=l_id, contents=True)
 
-    for item in lib_content_obj:
 
+    f = namedtuple('file', 'name id')
+    files = []
+    logger.info("Getting Files name and Id" )
+
+    for item in lib_content_obj:
         if item['type'] == "file" and os.path.basename(item['name']) in inputs:
-            lib = f(item['name'], os.path.basename(item['name']), item['id'])
+            lib = f(os.path.basename(item['name']), item['id'])
             files.append(lib)
 
-
-    print files
-    sys.exit()
-
-   # for item in libre_obj:
-    #    if item['type'] == 'file':
-    #        lib = l(item['name'], item['id'])
-    #        library.append(lib)
-    #
-    # print library
+    return files
 
 
 def main():
