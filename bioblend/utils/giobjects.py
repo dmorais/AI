@@ -130,3 +130,34 @@ def workflow_inputs(gi, workflow_id, logger):
         workflow_input.append(w_input)
 
     return workflow_input
+
+
+def create_wf_input_dict(gi, datasets, inputs, data, labels, src, logger):
+    '''
+    :param gi: galaxy instance object
+    :param datasets: a list of namedtuples with dataset name, id
+    :param inputs: a list of namedtuples with workflow inputs index, label
+    :param data: a list with the inputs from the yaml file
+    :param labels: a list with labels for each input (must be in the same order as the data list)
+    :return: a dictionary of dictionary to be used as input in the workflow invocation
+    '''
+
+    logger.info("Creating input dictionary")
+    input_dict = dict()
+    label_dict = dict(zip(data, labels))
+
+    # Map each dataset name to a label
+    for item in datasets:
+        if item.name in label_dict:
+            label_dict[label_dict[item.name]] = item.id
+            label_dict.pop(item.name)
+
+    # Map each index to a label dictionary
+    for item in inputs:
+        if item.label in label_dict:
+            input_dict[item.index] = {
+                "id": label_dict[item.label],
+                "src": src
+            }
+
+    return input_dict
