@@ -16,6 +16,7 @@ import sys
 from collections import namedtuple
 import yaml
 from bioblend import galaxy
+import pprint
 import os
 import logging
 from utils.giobjects import *
@@ -162,7 +163,7 @@ def workflow_inputs(gi, workflow_id):
     w = namedtuple('inputs', 'index label')
 
     work_obj = gi.workflows.show_workflow(workflow_id=workflow_id)
-    print work_obj
+    pprint.pprint(work_obj)
     sys.exit(0)
 
     for k, v in work_obj['inputs'].iteritems():
