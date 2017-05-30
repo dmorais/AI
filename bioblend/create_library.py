@@ -64,6 +64,8 @@ def upload_from_url(gi, lib_id, urls, folder_id):
     for url in urls:
         up_obj = gi.libraries.upload_file_from_url(library_id=lib_id, file_url=url, folder_id=folder_id)
 
+        logger.info(url + " Uploaded")
+
         print up_obj
 
 def main():
