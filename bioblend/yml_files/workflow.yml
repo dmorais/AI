@@ -20,10 +20,10 @@
 #
 
 - name: clean_seq
-  workflow_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/workflows/
+  workflow_path: workflows/
   inputs:
     - Test.fastq
-  inputs_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/datasets/
+  inputs_path: datasets/
   inputs_label:
     - fastq
   dbkey:
