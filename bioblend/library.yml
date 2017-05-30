@@ -1,11 +1,11 @@
 ---
 
-#- name: seq_cleans
-#  description: My test API lib
-#  folder: dirty_fastq
-#  inputs:
-#    - Test.fastq
-#  input_path: datasets
+- name: seq_cleans
+  description: My test API lib
+  folder: dirty_fastq
+  inputs:
+    - Test.fastq
+  input_path: datasets
 
 - name: from_hub
   description: Uploaded from data hub through API

@@ -60,6 +60,7 @@ def upload_from_local(gi, lib_id, path, datasets, folder_id):
 
 def upload_from_url(gi, lib_id, urls, folder_id):
 
+    logger.info("Uploading Files")
     for url in urls:
         up_obj = gi.libraries.upload_file_from_url(library_id=lib_id, file_url=url, folder_id=folder_id)
 
@@ -83,8 +84,12 @@ def main():
 
         library = create_libary(gi, item.name, item.description)
         folder = create_folder(gi, library.id, item.folder)
-        # uploads = upload_from_local(gi, library.id, item.input_path, item.inputs, folder.id)
-        uploads = upload_from_url(gi, library.id, item.urls, folder.id)
+
+        if item.inputs:
+
+            uploads = upload_from_local(gi, library.id, item.input_path, item.inputs, folder.id)
+        else:
+            uploads = upload_from_url(gi, library.id, item.urls, folder.id)
 
 
     logger.info("Done")
