@@ -44,6 +44,19 @@ def create_folder(gi, lib_id, name):
     return folder
 
 
+def upload_from_local(gi, lib_id, path, datasets, folder_id):
+
+    logger.info("Uploading Files")
+
+    uploads = []
+
+
+    for dataset in datasets:
+        up_obj = gi.libraries.upload_file_from_local_path(library_id=lib_id,
+                                                          file_local_path=path + '/' + dataset,
+                                                          folder_id=folder_id)
+        print up_obj
+
 
 def main():
     if len(sys.argv) != 3:
@@ -63,6 +76,7 @@ def main():
 
         library = create_libary(gi, item.name, item.description)
         folder = create_folder(gi, library.id, item.folder)
+        uploads = upload_from_local(gi, library.id, item.input_path, item.inputs, folder.id)
 
 
     logger.info("Done")
