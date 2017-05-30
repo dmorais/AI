@@ -1,0 +1,8 @@
+---
+
+- name: seq_clean
+  description: My test API lib
+  folder: dirty_fastq
+  inputs:
+    - Test.fastq
+  input_path: /Users/dmorais/scratch/python_scripts/AI/bioblend/datasets/Test.fastq

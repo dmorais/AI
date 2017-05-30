@@ -2,7 +2,7 @@ import sys
 from collections import namedtuple
 from bioblend import galaxy
 import os
-from utils.gihistory import *
+from utils.giobjects import *
 from utils.loggerinitializer import *
 import logging
 from distutils.dir_util import mkpath
