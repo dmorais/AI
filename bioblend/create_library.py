@@ -89,7 +89,7 @@ def main():
 
             uploads = upload_from_local(gi, library.id, item.input_path, item.inputs, folder.id)
 
-        else:
+        if item.urls is not None:
             uploads = upload_from_url(gi, library.id, item.urls, folder.id)
 
 
