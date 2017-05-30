@@ -4,11 +4,9 @@
 
 import sys
 from collections import namedtuple
-import yaml
 from bioblend import galaxy
 import os
 import logging
-import pprint
 from utils.giobjects import *
 from utils.loggerinitializer import *
 from distutils.dir_util import mkpath
