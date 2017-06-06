@@ -1,5 +1,6 @@
 # Get status of all datasets in all histories of a Galaxy  instance
 from bioblend import galaxy
+from collections import namedtuple
 from collections import defaultdict
 import logging
 from utils.giobjects import *
@@ -21,7 +22,9 @@ def get_history_id(gi):
         for key, value in item.iteritems():
             if key == 'id':
                 histories.append(value)
-    return histories
+
+    print histories
+    #return histories
 
 
 def get_dataset_id(gi, histories):
