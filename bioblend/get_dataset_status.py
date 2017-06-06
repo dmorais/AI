@@ -35,7 +35,7 @@ def get_dataset_id(gi, hist_id):
 
     dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-    print  dataset_obj['state_ids']['ok']
+    print  dataset_obj['state_ids']
 
     # for meta in dataset_obj.keys():
     #
