@@ -59,13 +59,6 @@ def get_dataset_metadata(gi, dataSetId):
 
 def main():
 
-    # apiFile = open("api-key.txt")
-    #
-    #
-    # url, key = apiFile.read().strip().split(',')
-    #
-    # gi = galaxy.GalaxyInstance(url=url, key=key)
-
     gi = get_galaxy_instance("api-key.txt",logger)
 
     histories = get_history_id(gi)
