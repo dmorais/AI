@@ -101,9 +101,10 @@ def main():
 
 
     for hist, states in metadata.iteritems():
-        print "\n\n", hist,"\n"
+        print "\n\n", hist
         for state, id in sorted(states.iteritems()):
             print state, "->", id
+        print "\n"
 
     # print histories
     # sys.exit()
