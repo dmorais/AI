@@ -37,9 +37,10 @@ def get_dataset_id(gi, hist_id):
 
     d = namedtuple("dataset", 'ok discarded failed_metadata upload paused running error new queued empty')
 
-    dataset = d('ok', d['ok'], 'discarded', d['discarded'], 'failed_metadata', d['failed_metadata'],
-               'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
-               'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
+    dataset = d('ok', d['ok'])
+                #, 'discarded', d['discarded'], 'failed_metadata', d['failed_metadata'],
+               #'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
+               #'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
 
     print dataset
 
