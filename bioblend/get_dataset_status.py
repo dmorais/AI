@@ -1,4 +1,4 @@
-# Get status of all datasets in all histories of a Galaxy instance
+# Get status of all datasets in all histories of a Galaxy  instance
 from bioblend import galaxy
 from collections import defaultdict
 import logging
