@@ -13,19 +13,19 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 initialize_logger(os.getcwd() + "/logs/", logger)
 
-def get_history_id(gi):
-
-    histories = []
-    history = gi.histories.get_histories()
-    print history
-    sys.exit(0)
-
-    for item in history:
-        for key, value in item.iteritems():
-            if key == 'id':
-                histories.append(value)
-
-    return histories
+# def get_history_id(gi):
+#
+#     histories = []
+#     hist_obj = gi.histories.get_histories()
+#     print history
+#     sys.exit(0)
+#
+#     for item in history:
+#         for key, value in item.iteritems():
+#             if key == 'id':
+#                 histories.append(value)
+#
+#     return histories
 
 
 def get_dataset_id(gi, histories):
@@ -66,6 +66,8 @@ def main():
     gi = get_galaxy_instance("api-key.txt",logger)
 
     histories = get_history_id(gi)
+    print histories
+    sys.exit()
 
     dataSetId = get_dataset_id(gi, histories)
     datasetMeta = get_dataset_metadata(gi, dataSetId)
