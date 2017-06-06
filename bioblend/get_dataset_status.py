@@ -96,7 +96,7 @@ def main():
 
         dataset_id = get_dataset_id(gi, history.id)
 
-        metadata[history.id] = dataset_id
+        metadata[history.name + "_" + history.id] = dataset_id
 
 
 
