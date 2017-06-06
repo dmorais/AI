@@ -28,24 +28,37 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 #     return histories
 
 
-def get_dataset_id(gi, histories):
+def get_dataset_id(gi, hist_id):
 
-    dataSetId = {}
-    name = ''
 
-    for hisId in histories:
-        historyData = gi.histories.show_history(history_id=hisId)
-        for key, value in historyData.iteritems():
+    dataset = []
 
-            if key == 'name':
-                name = value
+    dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-            if key == 'state_ids':
+    for meta in dataset_obj.keys():
 
-                for status, data in value.iteritems():
-                    if len(data) > 0:
-                        dataSetId[name + ":" + hisId + ":" + status] = data
-    return dataSetId
+        if meta == 'state_ids':
+            for k, v in meta.iteritems():
+                print k, "->", v
+
+    sys.exit()
+
+    # dataSetId = {}
+    # name = ''
+    #
+    # for hisId in histories:
+    #     historyData = gi.histories.show_history(history_id=hisId)
+    #     for key, value in historyData.iteritems():
+    #
+    #         if key == 'name':
+    #             name = value
+    #
+    #         if key == 'state_ids':
+    #
+    #             for status, data in value.iteritems():
+    #                 if len(data) > 0:
+    #                     dataSetId[name + ":" + hisId + ":" + status] = data
+    # return dataSetId
 
 
 def get_dataset_metadata(gi, dataSetId):
@@ -66,17 +79,22 @@ def main():
     gi = get_galaxy_instance("api-key.txt",logger)
 
     histories = get_history(gi)
-    print histories
-    sys.exit()
+    for history in histories:
 
-    dataSetId = get_dataset_id(gi, histories)
-    datasetMeta = get_dataset_metadata(gi, dataSetId)
+        dataset_id = get_dataset_id(gi, history.id)
 
-    # print log
-    for k, v in datasetMeta.iteritems():
-        print k
-        for item, name in v.iteritems():
-            print " ", item, name
+
+    # print histories
+    # sys.exit()
+    #
+    # dataSetId = get_dataset_id(gi, histories)
+    # datasetMeta = get_dataset_metadata(gi, dataSetId)
+    #
+    # # print log
+    # for k, v in datasetMeta.iteritems():
+    #     print k
+    #     for item, name in v.iteritems():
+    #         print " ", item, name
 
 
 if __name__ == '__main__':
