@@ -101,7 +101,7 @@ def main():
 
 
     for hist, states in metadata.iteritems():
-        print "\n\n", hist,
+        print "\n\n", hist,"\n"
         for state, id in sorted(states.iteritems()):
             print state, "->", id
 
