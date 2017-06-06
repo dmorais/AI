@@ -6,7 +6,7 @@ import logging
 from utils.giobjects import *
 from utils.loggerinitializer import *
 from distutils.dir_util import mkpath
-
+import sys
 
 mkpath(os.getcwd() + "/logs/")
 logger = logging.getLogger(__name__)
@@ -17,14 +17,15 @@ def get_history_id(gi):
 
     histories = []
     history = gi.histories.get_histories()
+    print history
+    sys.exit(0)
 
     for item in history:
         for key, value in item.iteritems():
             if key == 'id':
                 histories.append(value)
 
-    print histories
-    #return histories
+    return histories
 
 
 def get_dataset_id(gi, histories):
