@@ -37,7 +37,7 @@ def get_galaxy_instance(api_key, logger):
     with open(api_key, 'r') as api:
         try:
             for line in api:
-                if line.startswith('#'):
+                if line[0] == '#':
                     continue
                 else:
                     url, key = api.read().strip().split(',')
