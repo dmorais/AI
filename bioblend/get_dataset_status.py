@@ -31,11 +31,19 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 def get_dataset_id(gi, hist_id):
 
 
-    dataset = []
+
 
     dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-    print  dataset_obj['state_ids']
+    d = namedtuple("dataset", 'ok discarded failed_metadata upload paused running error new queued empty')
+
+    dataset = ('ok', d['ok'], 'discarded', d['discarded'], 'failed_metadata', d['failed_metadata'],
+               'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
+               'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
+
+    print dataset
+
+    # print dataset_obj['state_ids']
 
     # for meta in dataset_obj.keys():
     #
