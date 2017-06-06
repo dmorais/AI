@@ -38,7 +38,7 @@ def get_dataset_id(gi, hist_id):
     for meta in dataset_obj.keys():
 
         if meta == 'state_ids':
-            print meta
+            print meta['state_ids']
             # for k, v in meta.iteritems():
             #     print k, "->", v
 
