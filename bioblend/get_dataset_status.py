@@ -35,7 +35,7 @@ def get_dataset_id(gi, hist_id):
 
     dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-    d = namedtuple("dataset", 'ok id discarded id ')#failed_metadata upload paused running error new queued empty')
+    d = namedtuple("dataset", 'ok ok_id discarded d_id ')#failed_metadata upload paused running error new queued empty')
 
     dataset = d('ok', d['ok'], 'discarded', d['discarded'])
                 #,  'failed_metadata', d['failed_metadata'],
