@@ -37,55 +37,52 @@ def get_dataset_id(gi, hist_id):
 
     d = namedtuple("dataset", 'ok ok_id ')#failed_metadata upload paused running error new queued empty')
 
-    # dataset = d('ok', dataset_obj['state_ids']['ok'])
-                #,  'failed_metadata', d['failed_metadata'],
-               #'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
-               #'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
+    return dataset_obj['state_ids']
 
-    for k, v in sorted(dataset_obj['state_ids'].iteritems()):
-        print k, "->", v
+    # for k, v in sorted(dataset_obj['state_ids'].iteritems()):
+    #     print k, "->", v
 
 
-    # print dataset_obj['state_ids']
-
-    # for meta in dataset_obj.keys():
+    # # print dataset_obj['state_ids']
     #
-    #     if meta == 'state_ids':
-    #         print meta[0]
-    #         # for k, v in meta.iteritems():
-    #         #     print k, "->", v
-
-    sys.exit()
-
-    # dataSetId = {}
-    # name = ''
+    # # for meta in dataset_obj.keys():
+    # #
+    # #     if meta == 'state_ids':
+    # #         print meta[0]
+    # #         # for k, v in meta.iteritems():
+    # #         #     print k, "->", v
     #
-    # for hisId in histories:
-    #     historyData = gi.histories.show_history(history_id=hisId)
-    #     for key, value in historyData.iteritems():
+    # sys.exit()
     #
-    #         if key == 'name':
-    #             name = value
-    #
-    #         if key == 'state_ids':
-    #
-    #             for status, data in value.iteritems():
-    #                 if len(data) > 0:
-    #                     dataSetId[name + ":" + hisId + ":" + status] = data
-    # return dataSetId
+    # # dataSetId = {}
+    # # name = ''
+    # #
+    # # for hisId in histories:
+    # #     historyData = gi.histories.show_history(history_id=hisId)
+    # #     for key, value in historyData.iteritems():
+    # #
+    # #         if key == 'name':
+    # #             name = value
+    # #
+    # #         if key == 'state_ids':
+    # #
+    # #             for status, data in value.iteritems():
+    # #                 if len(data) > 0:
+    # #                     dataSetId[name + ":" + hisId + ":" + status] = data
+    # # return dataSetId
 
 
-def get_dataset_metadata(gi, dataSetId):
-
-    datasetMeta = defaultdict(dict)
-
-    for status, litsId in dataSetId.iteritems():
-        for dataId in litsId:
-            metaData = gi.datasets.show_dataset(dataset_id=dataId)
-            for key, value in metaData.iteritems():
-                if key == "name":
-                    datasetMeta[status][dataId] = value
-    return datasetMeta
+# def get_dataset_metadata(gi, dataSetId):
+#
+#     datasetMeta = defaultdict(dict)
+#
+#     for status, litsId in dataSetId.iteritems():
+#         for dataId in litsId:
+#             metaData = gi.datasets.show_dataset(dataset_id=dataId)
+#             for key, value in metaData.iteritems():
+#                 if key == "name":
+#                     datasetMeta[status][dataId] = value
+#     return datasetMeta
 
 
 def main():
@@ -93,10 +90,20 @@ def main():
     gi = get_galaxy_instance("api-key.txt",logger)
 
     histories = get_history(gi)
+    metadata = {}
+
     for history in histories:
 
         dataset_id = get_dataset_id(gi, history.id)
 
+        metadata[history.id] = dataset_id
+
+
+
+    for hist, states in metadata.iteritems():
+        print hist,
+        for state, id in states.iteritems():
+            print state, "->", id
 
     # print histories
     # sys.exit()
