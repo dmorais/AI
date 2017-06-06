@@ -35,14 +35,15 @@ def get_dataset_id(gi, hist_id):
 
     dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-    d = namedtuple("dataset", 'ok ok_id')#failed_metadata upload paused running error new queued empty')
+    d = namedtuple("dataset", 'ok ok_id ')#failed_metadata upload paused running error new queued empty')
 
-    dataset = d('ok', dataset_obj['state_ids']['ok'])
+    # dataset = d('ok', dataset_obj['state_ids']['ok'])
                 #,  'failed_metadata', d['failed_metadata'],
                #'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
                #'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
 
-    print dataset
+    for k, v in sorted(dataset_obj['state_ids'].iteritems):
+        print k, "->", v
 
 
     # print dataset_obj['state_ids']
