@@ -65,7 +65,7 @@ def main():
 
     gi = get_galaxy_instance("api-key.txt",logger)
 
-    histories = get_history_id(gi)
+    histories = get_history(gi)
     print histories
     sys.exit()
 
