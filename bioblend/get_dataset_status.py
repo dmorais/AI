@@ -35,12 +35,14 @@ def get_dataset_id(gi, hist_id):
 
     dataset_obj = gi.histories.show_history(history_id=hist_id)
 
-    for meta in dataset_obj.keys():
+    print  dataset_obj['state_ids']
 
-        if meta == 'state_ids':
-            print meta[0]
-            # for k, v in meta.iteritems():
-            #     print k, "->", v
+    # for meta in dataset_obj.keys():
+    #
+    #     if meta == 'state_ids':
+    #         print meta[0]
+    #         # for k, v in meta.iteritems():
+    #         #     print k, "->", v
 
     sys.exit()
 
