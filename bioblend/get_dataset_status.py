@@ -42,9 +42,8 @@ def get_dataset_id(gi, hist_id):
                #'upload', d['upload'], 'paused', d['paused'], 'running', d['running'], 'error', d['error'],
                #'new', d['new'], 'queued', d['queued'], 'empty', d['empty'])
 
-    # for k, v in sorted(dataset_obj['state_ids'].iteritems):
-    #     print k, "->", v
-    print type(dataset_obj['state_ids'])
+    for k, v in sorted(dataset_obj['state_ids'].iteritems()):
+        print k, "->", v
 
 
     # print dataset_obj['state_ids']
