@@ -37,10 +37,10 @@ def get_galaxy_instance(api_key, logger):
     with open(api_key, 'r') as api:
         try:
             for line in api:
-                if line[0] == '#':
+                if line.startswith('#'):
                     continue
                 else:
-                    url, key = api.read().strip().split(',')
+                    url, key = line.strip().split(',')
                     gi = galaxy.GalaxyInstance(url=url, key=key)
                     return gi
 
