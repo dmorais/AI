@@ -1,7 +1,16 @@
 # Get status of all datasets in all histories of a Galaxy instance
 from bioblend import galaxy
 from collections import defaultdict
+import logging
+from utils.giobjects import *
+from utils.loggerinitializer import *
+from distutils.dir_util import mkpath
 
+
+mkpath(os.getcwd() + "/logs/")
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+initialize_logger(os.getcwd() + "/logs/", logger)
 
 def get_history_id(gi):
 
@@ -50,10 +59,14 @@ def get_dataset_metadata(gi, dataSetId):
 
 def main():
 
-    apiFile = open("api-key.txt")
-    url, key = apiFile.read().strip().split(',')
+    # apiFile = open("api-key.txt")
+    #
+    #
+    # url, key = apiFile.read().strip().split(',')
+    #
+    # gi = galaxy.GalaxyInstance(url=url, key=key)
 
-    gi = galaxy.GalaxyInstance(url=url, key=key)
+    gi = get_galaxy_instance("api-key.txt",logger)
 
     histories = get_history_id(gi)
 
