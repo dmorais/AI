@@ -40,6 +40,18 @@ def get_dataset_id(gi, hist_id):
     return dataset_obj['state_ids']
 
 
+def get_datset_name(gi, d_id):
+    '''
+
+    :param gi: galaxy instance object
+    :param d_id: dataset id
+    :return: string dataset name
+    '''
+
+    data_name_obj = gi.datasets.show_dataset(dataset_id=d_id)
+    return data_name_obj['name']
+
+
 def get_galaxy_instance(api_key, logger):
     '''
     :param api_key:
