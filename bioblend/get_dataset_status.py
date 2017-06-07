@@ -103,10 +103,10 @@ def main():
         print "\n", hist
         for state, id in sorted(states.iteritems(), reverse=True):
             if (state == 'ok' or state=='discarded' or state=='error' or state=='running') and len(state) > 0:
-                print state, "->",
+                print state
 
                 for data_id in id:
-                    print data_id, get_datset_name(gi,data_id)
+                    print "\t", data_id, get_datset_name(gi,data_id)
 
         print "\n"
 
