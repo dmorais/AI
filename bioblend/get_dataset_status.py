@@ -23,12 +23,12 @@ def main():
     histories = get_history(gi)
     metadata = {}
 
-    logger.info("Getting Datasets state and ids")
+    logger.info("Getting Datasets states and ids")
     for history in histories:
         dataset_id = get_dataset_id(gi, history.id)
         metadata[history.name + "_" + history.id] = dataset_id
 
-    logger.info("Getting Datasets name")
+    logger.info("Getting Datasets names")
     for hist, states in metadata.iteritems():
         print "\n", hist
         for state, id in sorted(states.iteritems(), reverse=True):
