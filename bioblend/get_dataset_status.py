@@ -28,16 +28,11 @@ initialize_logger(os.getcwd() + "/logs/", logger)
 #     return histories
 
 
-def get_dataset_id(gi, hist_id):
-
-
-
-
-    dataset_obj = gi.histories.show_history(history_id=hist_id)
-
-    d = namedtuple("dataset", 'ok ok_id ')#failed_metadata upload paused running error new queued empty')
-
-    return dataset_obj['state_ids']
+# def get_dataset_id(gi, hist_id):
+#
+#
+#     dataset_obj = gi.histories.show_history(history_id=hist_id)
+#     return dataset_obj['state_ids']
 
     # for k, v in sorted(dataset_obj['state_ids'].iteritems()):
     #     print k, "->", v
@@ -84,6 +79,13 @@ def get_dataset_id(gi, hist_id):
 #                     datasetMeta[status][dataId] = value
 #     return datasetMeta
 
+def get_datset_name(gi, d_id):
+
+
+    data_name_obj = gi.datasets.show_dataset(dataset_id=d_id)
+
+    return data_name_obj['name']
+
 
 def main():
 
@@ -93,18 +95,19 @@ def main():
     metadata = {}
 
     for history in histories:
-
         dataset_id = get_dataset_id(gi, history.id)
-
         metadata[history.name + "_" + history.id] = dataset_id
-
 
 
     for hist, states in metadata.iteritems():
         print "\n", hist
         for state, id in sorted(states.iteritems(), reverse=True):
             if state == 'ok' or state=='discarded' or state=='error' or state=='running':
-                print state, "->", id
+                print state, "->",
+
+                for data_id in id:
+                    print data_id, get_datset_name(gi,data_id)
+
         print "\n"
 
     # print histories

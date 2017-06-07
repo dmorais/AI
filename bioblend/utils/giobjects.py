@@ -28,6 +28,17 @@ def get_history(gi, name=None):
     return histories
 
 
+def get_dataset_id(gi, hist_id):
+    '''
+
+    :param gi: galaxy instance object
+    :param hist_id: history id
+    :return: a dictionary of lists dict[state] = [ list of ids]
+    '''
+
+    dataset_obj = gi.histories.show_history(history_id=hist_id)
+    return dataset_obj['state_ids']
+
 
 def get_galaxy_instance(api_key, logger):
     '''
