@@ -17,7 +17,7 @@ def main():
         logging.error("Bad args", exc_info=True)
         sys.exit(1)
 
-    logger.info("############ STARTING " + sys.argv[0] + "#############")
+    logger.info("############ STARTING " + sys.argv[0] + " #############")
     gi = get_galaxy_instance(sys.argv[1], logger)
 
     histories = get_history(gi)
@@ -36,7 +36,7 @@ def main():
                 print state
 
                 for data_id in id:
-                    print "\t", data_id, get_datset_name(gi, data_id)
+                    print "\t", data_id, "\t", get_datset_name(gi, data_id)
 
         print "\n"
 
