@@ -102,7 +102,7 @@ def main():
     for hist, states in metadata.iteritems():
         print "\n", hist
         for state, id in sorted(states.iteritems(), reverse=True):
-            if (state == 'ok') or (state=='discarded') or (state=='error') or (state=='running') and len(state) > 0:
+            if (state == 'ok' or state=='discarded' or state=='error' or state=='running') and len(state) > 0:
                 print state, "->",
 
                 for data_id in id:
