@@ -107,6 +107,8 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     logger.info("Getting workflow Id")
     work_obj = gi.workflows.get_workflows()
 
+    print work_obj
+    sys.exit()
     w = namedtuple('workflow', 'name id')
 
     if len(work_obj) == 0:
