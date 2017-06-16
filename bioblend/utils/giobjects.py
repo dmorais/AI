@@ -110,8 +110,8 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
 
     for a in work_obj:
         print "workname ", a['name']
-        if a['name'] == 'VCF_WF':
-            print "buuuu"
+        if a['name'] == workflow_name:
+            print "buuuu", a['name']
     #sys.exit()
     w = namedtuple('workflow', 'name id')
 
