@@ -108,7 +108,7 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     work_obj = gi.workflows.get_workflows()
 
     print work_obj
-    sys.exit()
+    #sys.exit()
     w = namedtuple('workflow', 'name id')
 
     if len(work_obj) == 0:
@@ -119,7 +119,7 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
     else:
         for item in work_obj:
 
-            print item['name'],  workflow_name
+
 
             # If workflow already exist (or has been already auploaded via API) return its name and id
             if item['name'] == workflow_name or item['name'] + ' (imported from API)':
