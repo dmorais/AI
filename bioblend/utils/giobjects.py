@@ -118,7 +118,6 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
         for item in work_obj:
 
             if item['name'] == workflow_name or item['name'] == workflow_name + ' (imported from API)':
-                print " here: ", item['name'], workflow_name
                 work = w(item['name'], item['id'])
                 return work
 
