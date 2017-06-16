@@ -119,6 +119,7 @@ def get_workflow_id(gi, workflow_name, logger, workflow_path=None):
 
             if item['name'] == workflow_name or item['name'] == workflow_name + ' (imported from API)':
                 work = w(item['name'], item['id'])
+                logger.info("Ready to prepare workflow: " + item['name'])
                 return work
 
         # call upload method in and return the workflow name and id

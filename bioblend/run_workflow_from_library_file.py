@@ -48,6 +48,7 @@ def get_lib_datasets(gi, lib_name, inputs):
         logger.info("Getting Files name and Id")
         for item in lib_content_obj:
             if item['type'] == "file" and os.path.basename(item['name']) in inputs:
+                logger.info("File(s) in this workflow: " + item['name'])
                 lib = f(os.path.basename(item['name']), item['id'])
                 files.append(lib)
 
