@@ -1,11 +1,19 @@
 import tweepy
 from time import sleep
+from datetime import datetime
 from keys import *
 import argparse
 import random
 import sys
 import os
 import util.tweet as ut
+import logging
+import util.loggerinitializer as utl
+
+# Create Log dirs and object
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+utl.initialize_logger(os.getcwd() + "/logs/", logger)
 
 # Access and authorize our Twitter credentials from keys.py
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -14,41 +22,70 @@ api = tweepy.API(auth)
 
 
 def send_tweet(text):
-    for line in text:
+    if len(text) == 0:
+        return text
 
+    for line in text:
+        sleep(10)
         try:
             if line != '\n':
-                print "Tweeting new message"
+
                 api.update_status(line)
-                return
+                text.remove(line)
+
+                logger.info("Tweeting new message")
+                return text
             else:
                 pass
+
         except tweepy.TweepError as e:
             if 'Status is a duplicate' in e.reason:
+                logger.debug(e.reason)
                 pass
+
             else:
+                logger.error(e.reason)
                 print e.reason
                 sleep(5)
+
+    return text
 
 
 def retweet(hashtag):
     done = 1
-    print "hashtag:", hashtag
-    # For loop to iterate over tweets with hashtag key words limit to 2
+    lang = random.choice(['pt', 'en'])
+
+    logger.info("hashtag: " + hashtag + " lang: " + lang)
+
     for tweet in tweepy.Cursor(api.search,
                                q=hashtag,
-                               lang='pt').items(2):
+                               lang=lang).items(50):
 
         try:
-            # Print out usernames of the last 2 people to use the hashtag
-            print('Tweet by: @' + tweet.user.screen_name)
 
-            tweet.retweet()
-            print 'Retweeted the tweet from hashtag:' + hashtag
-            done = 0
+            # Prevent self tweets
+            if tweet.user.screen_name == 'dallavre':
+                continue
+
+            # Only post tweets where user screen name is equals to the handle
+            if (hashtag.startswith('@') and tweet.user.screen_name == hashtag[1:]) or (hashtag.startswith('#')):
+
+                logger.info('Tweet by: @' + tweet.user.screen_name)
+
+                tweet.retweet()
+                logger.info("Retweeted the tweet from hashtag: " + hashtag + " in lang:" + lang)
+
+                done = 0
+                return 0
+
+            else:
+                logger.info("User: " + tweet.user.screen_name + " do not own the handle: " + hashtag)
+
             sleep(5)
 
         except tweepy.TweepError as e:
+
+            logger.debug(e.reason)
             print(e.reason)
 
         except StopIteration:
@@ -65,15 +102,16 @@ def fetch_tweet_data(file_name, tweet_last_modif, tweet_list):
 
             # if the file was modified since last read
             if os.path.getmtime(file_name) != tweet_last_modif:
-                print "Tweet file was modified"
+                logger.info("Tweet file was modified")
                 tweet_last_modif = os.path.getmtime(file_name)
                 tweet_list = ut.get_tweet(file_name)
 
         else:
-            print "list is empty"
+            logger.debug("list is empty")
             tweet_list = ut.get_tweet(file_name)
 
     else:
+        logger.error("ERROR: The file containing the tweets was not found")
         print "ERROR: The file containing the tweets was not found"
         sys.exit(1)
 
@@ -87,14 +125,14 @@ def fetch_hashtag_data(file_name, kw_last_modif, keywords):
 
             # if the file was modified since last read
             if os.path.getmtime(file_name) != kw_last_modif:
-                print "Hashtags file was modified"
+                logger.info("Hashtags file was modified")
                 kw_last_modif = os.path.getmtime(file_name)
                 keywords = ut.get_hashtags(file_name)
         else:
-
-            print "list is empty"
+            logger.debug("list is empty")
             keywords = ut.get_hashtags(file_name)
     else:
+        logger.error("ERROR: The file containing the hashtags was not found")
         print "ERROR: The file containing the hashtags was not found"
         sys.exit(1)
 
@@ -114,23 +152,28 @@ def main():
     kw_last_modif = 0
 
     while True:
-        print "Getting list of tweets"
+
+        logger.info("\n#################\nGetting list of tweets")
         tweet_list, tweet_last_modif = fetch_tweet_data(args.file, tweet_last_modif, tweet_list)
 
-        print "Getting hashtags"
+        logger.info("Getting hashtags")
         keywords, kw_last_modif = fetch_hashtag_data(args.key, kw_last_modif, keywords)
 
-        send_tweet(tweet_list)
+        tweet_list = send_tweet(tweet_list)
+        ut.reduce_list(tweet_list)
 
         tweeted = retweet(random.choice(keywords))
         count = 0
 
-        while tweeted == "No tweet" or count > 100:
+        while tweeted == "No tweet" or count > 20:
+            sleep(60)
+            logger.debug("No tweet found with hashtag used. Trying again in 60 secs")
             tweeted = retweet(random.choice(keywords))
             count += 1
-            sleep(2)
 
-        sleep(86400)
+        logger.info("Time now is:" + str(datetime.now()) + "see you in 1 hour...")
+        # sleep(10800) # each 2 hours for testing purpose only
+        sleep(3600)
 
 
 if __name__ == '__main__':
