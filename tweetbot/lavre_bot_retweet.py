@@ -29,7 +29,6 @@ def send_tweet(text):
         sleep(10)
         try:
             if line != '\n':
-
                 api.update_status(line)
                 text.remove(line)
 
@@ -42,7 +41,6 @@ def send_tweet(text):
             if 'Status is a duplicate' in e.reason:
                 logger.debug(e.reason)
                 pass
-
             else:
                 logger.error(e.reason)
                 print e.reason
@@ -62,7 +60,6 @@ def retweet(hashtag):
                                lang=lang).items(50):
 
         try:
-
             # Prevent self tweets
             if tweet.user.screen_name == 'dallavre':
                 continue
@@ -77,14 +74,12 @@ def retweet(hashtag):
 
                 done = 0
                 return 0
-
             else:
                 logger.info("User: " + tweet.user.screen_name + " do not own the handle: " + hashtag)
 
             sleep(5)
 
         except tweepy.TweepError as e:
-
             logger.debug(e.reason)
             print(e.reason)
 
@@ -97,7 +92,6 @@ def retweet(hashtag):
 
 def fetch_tweet_data(file_name, tweet_last_modif, tweet_list):
     if ut.f_exists(file_name):
-
         if len(tweet_list) > 1:
 
             # if the file was modified since last read
@@ -105,11 +99,9 @@ def fetch_tweet_data(file_name, tweet_last_modif, tweet_list):
                 logger.info("Tweet file was modified")
                 tweet_last_modif = os.path.getmtime(file_name)
                 tweet_list = ut.get_tweet(file_name)
-
         else:
             logger.debug("list is empty")
             tweet_list = ut.get_tweet(file_name)
-
     else:
         logger.error("ERROR: The file containing the tweets was not found")
         print "ERROR: The file containing the tweets was not found"
@@ -120,7 +112,6 @@ def fetch_tweet_data(file_name, tweet_last_modif, tweet_list):
 
 def fetch_hashtag_data(file_name, kw_last_modif, keywords):
     if ut.f_exists(file_name):
-
         if len(keywords) > 1:
 
             # if the file was modified since last read
@@ -171,7 +162,7 @@ def main():
             tweeted = retweet(random.choice(keywords))
             count += 1
 
-        logger.info("Time now is:" + str(datetime.now()) + "see you in 1 hour...")
+        logger.info("Time now is:" + str(datetime.now()) + " see you in 1 hour...")
         # sleep(10800) # each 2 hours for testing purpose only
         sleep(3600)
 
