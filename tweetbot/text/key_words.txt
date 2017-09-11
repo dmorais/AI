@@ -4,7 +4,6 @@ personal finance
 @ftmoney
 @forbespersfin
 ukpersonalfinance
-nubank
 @nubankbrasil
 fintech
 moneysense
@@ -24,7 +23,7 @@ pimco
 selic
 copom
 poupança
-Paypal
+@PayPal
 SpaceX
 Mercado Bitcoin
 Ethereum

@@ -56,8 +56,8 @@ def retweet(hashtag):
     logger.info("hashtag: " + hashtag + " lang: " + lang)
 
     for tweet in tweepy.Cursor(api.search,
-                               q=hashtag,
-                               lang=lang).items(50):
+                               q=hashtag + " -filter:retweets",
+                               lang=lang).items(100):
 
         try:
             # Prevent self tweets
